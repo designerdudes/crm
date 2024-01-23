@@ -17,19 +17,19 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { BrandName } from "@/lib/constants"
+import { APP_NAME } from "@/constants/index"
 
 const stores = [
     {
-        value: BrandName,
-        label: BrandName,
+        value: APP_NAME,
+        label: APP_NAME,
     },
 
 ]
 
 export function ComboboxDemo() {
     const [open, setOpen] = React.useState(false)
-    const [value, setValue] = React.useState(BrandName)
+    const [value, setValue] = React.useState(APP_NAME)
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
