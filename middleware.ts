@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
     // Variable to track login status (initially set to true)
-    let isLoggedIn = false;
+    let isLoggedIn = true;
 
     // Check if user is logged in
     if (isLoggedIn) {

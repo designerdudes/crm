@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { UserAuthForm } from "@/components/forms/userAuthForm"
 import { APP_NAME, APP_SEO_TITLE } from "@/constants"
 import { ModeToggle } from "@/components/theme-toggler"
@@ -42,11 +42,24 @@ export default function AuthenticationPage() {
                     </div>
                 </div>
                 <div className="lg:p-8 p-12">
-                    <div className="absolute top-8 right-8">
+                    <div className="absolute top-8 right-8 flex items-center justify-center gap-4">
 
+                        <Button variant="secondary">Reset Password</Button>
                         <ModeToggle />
                     </div>
                     <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+                        <div className="relative z-20 flex justify-center w-full items-center text-lg font-bold">
+                            <Image
+                                src={"/assets/logo/logo.svg"}
+                                width={35}
+                                height={35}
+                                alt="Logo"
+                                className="mr-2 sepia-0 dark:invert-0"
+                            />
+                            <h2 className="text-md font-semibold tracking-tight">
+                                {APP_NAME}
+                            </h2>
+                        </div>
                         <UserAuthForm />
 
                     </div>
