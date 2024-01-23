@@ -21,7 +21,7 @@ function TopBar() {
     return (
         <div className='py-3 bg-secondary sticky z-40 top-0 overflow-hidden px-6 border-b-2 flex justify-between'>
             <div>
-                <LogoComponent width={40} height={40} />
+                <LogoComponent className='object-contain w-full m-3' width={120} height={20} />
             </div>
             <div className='flex items-center gap-4'>
                 <ModeToggle />

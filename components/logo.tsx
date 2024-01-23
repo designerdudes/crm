@@ -12,7 +12,7 @@ const LogoComponent: React.FC<LogoProps> = ({ className, width, height }) => {
     return (
         <div className={`logo`}>
             <Image
-                src="/assets/logo/logo.svg"
+                src="/assets/logo/logo-long.png"
                 alt="APlus Laundry Logo"
                 width={width}
                 className={cn('', className)}
