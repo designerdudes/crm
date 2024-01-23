@@ -18,7 +18,7 @@ export default function AuthenticationPage() {
     return (
         <>
 
-            <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+            <div className=" relative  h-screen flex flex-col md:items-center  justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 ">
 
                 <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:text-black dark:border-r lg:flex">
                     <div className="absolute inset-0 bg-primary" />
@@ -41,7 +41,7 @@ export default function AuthenticationPage() {
                         </blockquote>
                     </div>
                 </div>
-                <div className="lg:p-8">
+                <div className="lg:p-8 p-12">
                     <div className="absolute top-8 right-8">
 
                         <ModeToggle />
