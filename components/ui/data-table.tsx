@@ -96,7 +96,7 @@ export function DataTable<TData, TValue>({
 
         const Delete = async () => {
             try {
-                const result = await deleteAllData(deleteRoute as string, ids); // Assuming deleteData supports sending data in the request body
+
                 window.location.reload();
 
                 modal.onClose();
