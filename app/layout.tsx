@@ -27,7 +27,7 @@ export default function RootLayout({
           enableSystem={true}
           disableTransitionOnChange={false}
         >
-          {/* <ToastProvider /> */}
+          <ToastProvider />
           <NewOrderModalProvider />
           {children}
         </ThemeProvider>
