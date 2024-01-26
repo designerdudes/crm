@@ -8,7 +8,7 @@ const APP_SEO_DESCRIPTION = 'Al-Jazeera Factories for Steel Products Co. Ltd. (J
 const NavTabs = [
     {
         title: 'Home',
-        url: '/home'
+        url: '/'
     },
     {
         title: 'Leads',

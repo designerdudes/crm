@@ -36,8 +36,8 @@ export function NavigationMenuComponent() {
                                             key={index}
                                             href={item.href}
                                             title={item.title}
-                                            isActive={pathname.includes(tab.url)}
-                                            onClick={() => setActiveTab(tab.title)}
+                                            isActive={pathname === item.href}
+                                            onClick={() => setActiveTab(item.title)}
                                         >
                                             {item.description}
                                         </ListItem>
@@ -51,7 +51,7 @@ export function NavigationMenuComponent() {
                                 <NavigationMenuLink
                                     className={cn(
                                         navigationMenuTriggerStyle(),
-                                        pathname?.includes(tab.url) ? "bg-primary focus:bg-primary focus:text-white hover:bg-primary text-white" : "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+                                        pathname === tab.url ? "bg-primary focus:bg-primary focus:text-white hover:bg-primary text-white" : "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
                                     )}
                                 >
                                     {tab.title}
