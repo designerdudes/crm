@@ -2,6 +2,7 @@ import { DataTable } from '@/components/data-table'
 import Heading from '@/components/ui/heading'
 import React from 'react'
 import { columns } from './components/columns'
+import { AccountsData } from './data/AccountsData'
 
 
 
@@ -12,7 +13,7 @@ export default async function AccountsPage() {
         <div className='p-12' >
             <Heading title='Accounts' />
 
-            <DataTable searchKey="name" columns={columns} data={ } />
+            <DataTable searchKey="name" columns={columns} data={AccountsData as any} />
         </div>
     )
 }
