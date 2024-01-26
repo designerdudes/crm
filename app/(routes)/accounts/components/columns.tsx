@@ -55,7 +55,7 @@ export const columns: ColumnDef<Account>[] = [
                 <div className="flex space-x-2">
 
                     <span className="max-w-[500px] truncate font-medium">
-                        {row.original.account_name}
+                        {row.original.name}
                     </span>
                 </div>
             )

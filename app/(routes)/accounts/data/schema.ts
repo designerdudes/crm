@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const accountsSchema = z.object({
   id: z.string(),
-  account_name: z.string(),
+  name: z.string(),
   phone: z.string(),
   ownerAlias: z.string(),
 })
