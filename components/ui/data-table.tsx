@@ -36,7 +36,7 @@ import { DataTablePagination } from "./data-table-pagination"
 import toast from "react-hot-toast"
 import { useGlobalModal } from "@/hooks/GlobalModal"
 import { Alert } from "../forms/Alert"
-import { deleteAllData } from '../../axiosUtility/api'
+
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
