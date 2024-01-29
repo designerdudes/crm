@@ -8,6 +8,7 @@ import { useGlobalModal } from '@/hooks/GlobalModal'
 import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import GraphsComponent from '@/components/graphs'
+import { NewAccountForm } from '@/components/forms/newAccountForm'
 
 interface Props {
     params: {
@@ -41,7 +42,7 @@ function Page({ params }: Props) {
                             <DropdownMenuItem onSelect={() => {
                                 GlobalModal.title = "Create New Order"
                                 GlobalModal.description = "Create a new order for a customer"
-                                // GlobalModal.children = <NewOrderForm gap={2} />
+                                GlobalModal.children = <NewAccountForm gap={2} />
                                 GlobalModal.onOpen()
                             }}>
                                 <LucidePlusCircle className='w-4 mr-2' />
@@ -72,17 +73,9 @@ function Page({ params }: Props) {
             <div className='mt-4 grid grid-cols-2 '>
                 <Card className=''>
                     <h1>Test</h1>
-
-
                 </Card>
                 <Card className='mt-4 grid grid-cols-2'>
-
-
-
                     <h1>Test</h1>
-
-
-
                 </Card>
             </div>
         </div>
