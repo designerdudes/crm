@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../ui/command"
+import { Separator } from "../ui/separator"
 
 
 
@@ -58,13 +59,26 @@ const formSchemaOtp = z.object({
 export function NewAccountForm({ className, gap, ...props }: NewAccountFormProps) {
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
+    const [currentStep, setCurrentStep] = React.useState(1)
 
 
-    const subscription = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('subscription') === "false" ? false : true
 
-    const router = useRouter()
+    const stepNames = [
+        {
+            index: 1,
+            title: "About"
+        },
+
+        {
+            index: 2,
+            title: "Get In Touch"
+        },
 
 
+    ] as any
+
+
+    const totalSteps = stepNames.length
 
 
 
@@ -74,7 +88,7 @@ export function NewAccountForm({ className, gap, ...props }: NewAccountFormProps
             country: "India",
             state: "Andhra Pradesh",
             city: "Ongole",
-            customerType: subscription === false ? "nonsubscriber" : "subscriber",
+
         },
 
     })
@@ -104,135 +118,149 @@ export function NewAccountForm({ className, gap, ...props }: NewAccountFormProps
 
         <div className={cn("grid gap-6 ", className)} {...props}>
 
-
             <Form {...form} >
+                <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-2 w-full p-3 '>
+                    <div className='flex justify-between'>
+                        <Heading className='text-md' title={
+                            stepNames.map((step: any) => {
+                                if (step.index === currentStep) {
+                                    return step.title.toString()
+                                }
+                            })
+                        } />
+                        <p className=' text-sm text-muted-foreground'>Step {currentStep} of {totalSteps}</p>
 
-                <form onSubmit={form.handleSubmit(onSubmit)} className=" grid grid-cols-1 gap-3">
-                    <div className={`grid grid-cols-${gap} gap-3`}>
-                        {/* <div className={`grid grid-cols-2 gap-3`}> */}
-                        <FormField
-                            name="accountName"
-                            control={form.control}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="accountName">Account Name</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            id="accountName"
-                                            placeholder="eg. John Doe"
-                                            type="text"
-                                            autoCapitalize="none"
-                                            autoComplete="accountName"
-                                            autoCorrect="off"
-                                            disabled={isLoading}
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage>
-                                        {form.formState.errors.accountName?.message}
-                                    </FormMessage>
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            name="website"
-                            control={form.control}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="website">Website</FormLabel>
-                                    <FormControl>
+                    </div>
 
-                                        <Input
-                                            id="website"
-                                            placeholder="eg. john@example.com "
-                                            type="website"
-                                            autoCapitalize="none"
-                                            autoComplete="website"
-                                            autoCorrect="off"
-                                            disabled={isLoading}
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage>
-                                        {form.formState.errors.website?.message}
-                                    </FormMessage>
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            name="description"
-                            control={form.control}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="Description">Description</FormLabel>
-                                    <FormControl>
+                    <Separator className='my-0' orientation='horizontal' />
+                    {currentStep === 1 &&
+                        <div className='flex flex-col gap-3'>
 
-                                        <Input
-                                            id="Description"
-                                            placeholder="eg. 1234 Main St"
-                                            type="text"
-                                            autoCapitalize="none"
-                                            autoComplete="Description"
-                                            required={false}
-                                            autoCorrect="off"
-                                            disabled={isLoading}
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage>
-                                        {form.formState.errors.description?.message}
-                                    </FormMessage>
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            name="parentAccount"
-                            control={form.control}
-                            render={({ field }) => (
-                                <FormItem className="flex flex-col gap-2">
-                                    <FormLabel>Parent Account</FormLabel>
-                                    <Popover>
-                                        <PopoverTrigger {...field} defaultValue={field.value} asChild>
+                            <div className={`grid grid-cols-${gap} gap-3`}>
+                                {/* <div className={`grid grid-cols-2 gap-3`}> */}
+                                <FormField
+                                    name="accountName"
+                                    control={form.control}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel htmlFor="accountName">Account Name</FormLabel>
                                             <FormControl>
-                                                <Button
-                                                    variant="outline"
-                                                    role="combobox"
-                                                    className={cn(
-                                                        "w-full justify-between",
-                                                        !field.value && "text-muted-foreground"
-                                                    )}
-                                                >
-                                                    {/* {field.value
+                                                <Input
+                                                    id="accountName"
+                                                    placeholder="eg. John Doe"
+                                                    type="text"
+                                                    autoCapitalize="none"
+                                                    autoComplete="accountName"
+                                                    autoCorrect="off"
+                                                    disabled={isLoading}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage>
+                                                {form.formState.errors.accountName?.message}
+                                            </FormMessage>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    name="website"
+                                    control={form.control}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel htmlFor="website">Website</FormLabel>
+                                            <FormControl>
+
+                                                <Input
+                                                    id="website"
+                                                    placeholder="eg. john@example.com "
+                                                    type="website"
+                                                    autoCapitalize="none"
+                                                    autoComplete="website"
+                                                    autoCorrect="off"
+                                                    disabled={isLoading}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage>
+                                                {form.formState.errors.website?.message}
+                                            </FormMessage>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    name="description"
+                                    control={form.control}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel htmlFor="Description">Description</FormLabel>
+                                            <FormControl>
+
+                                                <Input
+                                                    id="Description"
+                                                    placeholder="eg. 1234 Main St"
+                                                    type="text"
+                                                    autoCapitalize="none"
+                                                    autoComplete="Description"
+                                                    required={false}
+                                                    autoCorrect="off"
+                                                    disabled={isLoading}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage>
+                                                {form.formState.errors.description?.message}
+                                            </FormMessage>
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <FormField
+                                    name="parentAccount"
+                                    control={form.control}
+                                    render={({ field }) => (
+                                        <FormItem className="flex flex-col gap-2">
+                                            <FormLabel>Parent Account</FormLabel>
+                                            <Popover>
+                                                <PopoverTrigger {...field} defaultValue={field.value} asChild>
+                                                    <FormControl>
+                                                        <Button
+                                                            variant="outline"
+                                                            role="combobox"
+                                                            className={cn(
+                                                                "w-full justify-between",
+                                                                !field.value && "text-muted-foreground"
+                                                            )}
+                                                        >
+                                                            {/* {field.value
                                                         ? AllData.find(
                                                             (data) => data._id === field.value
                                                         )?.email
                                                         : "Select Customer"} */}
-                                                    Select an Account
-                                                    <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                                </Button>
-                                            </FormControl>
-                                        </PopoverTrigger>
-                                        <PopoverContent side="right" className="w-full p-0">
-                                            <Command >
-                                                <CommandInput
-                                                    placeholder="Search Customers..."
-                                                    className="h-9"
-                                                />
-                                                <CommandEmpty>
-                                                    <div>
-                                                        No Customer found.
-                                                    </div>
-                                                    <div>
-                                                        <Button variant="ghost" className="mt-2">
-                                                            <Plus className="h-4 w-4 mr-2" />
-                                                            Add Customer
+                                                            Select an Account
+                                                            <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                                         </Button>
-                                                    </div>
+                                                    </FormControl>
+                                                </PopoverTrigger>
+                                                <PopoverContent side="right" className="w-full p-0">
+                                                    <Command >
+                                                        <CommandInput
+                                                            placeholder="Search Customers..."
+                                                            className="h-9"
+                                                        />
+                                                        <CommandEmpty>
+                                                            <div>
+                                                                No Customer found.
+                                                            </div>
+                                                            <div>
+                                                                <Button variant="ghost" className="mt-2">
+                                                                    <Plus className="h-4 w-4 mr-2" />
+                                                                    Add Customer
+                                                                </Button>
+                                                            </div>
 
-                                                </CommandEmpty>
-                                                <CommandGroup>
-                                                    {/* {AllData.map((data) => (
+                                                        </CommandEmpty>
+                                                        <CommandGroup>
+                                                            {/* {AllData.map((data) => (
                                                         <CommandItem
                                                             value={data._id}
                                                             key={data.email}
@@ -251,19 +279,19 @@ export function NewAccountForm({ className, gap, ...props }: NewAccountFormProps
                                                             />
                                                         </CommandItem>
                                                     ))} */}
-                                                    <CommandItem > <div className="flex flex-row items-center"> <Plus className="h-4 w-4 mr-2" /> Add Customer</div></CommandItem>
-                                                </CommandGroup>
-                                            </Command>
-                                        </PopoverContent>
-                                    </Popover>
-                                    {/* <FormDescription>
+                                                            <CommandItem > <div className="flex flex-row items-center"> <Plus className="h-4 w-4 mr-2" /> Add Customer</div></CommandItem>
+                                                        </CommandGroup>
+                                                    </Command>
+                                                </PopoverContent>
+                                            </Popover>
+                                            {/* <FormDescription>
                                         Please select a customer from the dropdown
                                     </FormDescription> */}
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        {/* <FormField
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                {/* <FormField
                             name="mobileNumber"
                             control={form.control}
                             render={({ field }) => (
@@ -414,15 +442,329 @@ export function NewAccountForm({ className, gap, ...props }: NewAccountFormProps
                                 </FormItem>
                             )}
                         /> */}
-                    </div>
-                    <div className={`${gap === 2 ? 'w-full' : 'grid gap-3 grid-cols-3'}`} >
-                        <Button type="submit" className="w-full" disabled={isLoading}>
-                            {isLoading && (
-                                <Icons.spinner className="mr-2 h-4  w-4 animate-spin" />
+                            </div>
+                            <div className={`${gap === 2 ? 'w-full' : 'grid gap-3 grid-cols-3'}`} >
+                                <Button onClick={() => setCurrentStep(currentStep + 1)} className="w-full" disabled={isLoading}>
+                                    {isLoading && (
+                                        <Icons.spinner className="mr-2 h-4  w-4 animate-spin" />
+                                    )}
+                                    Next
+                                </Button>
+                            </div>
+                        </div>}
+
+                    {
+                        // Get in Touch
+                        currentStep === 2 && <div>
+                            <div className={`grid grid-cols-${gap} gap-3`}>
+                                {/* <div className={`grid grid-cols-2 gap-3`}> */}
+                                <FormField
+                                    name="accountName"
+                                    control={form.control}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel htmlFor="accountName">Account Name</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    id="accountName"
+                                                    placeholder="eg. John Doe"
+                                                    type="text"
+                                                    autoCapitalize="none"
+                                                    autoComplete="accountName"
+                                                    autoCorrect="off"
+                                                    disabled={isLoading}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage>
+                                                {form.formState.errors.accountName?.message}
+                                            </FormMessage>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    name="website"
+                                    control={form.control}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel htmlFor="website">Website</FormLabel>
+                                            <FormControl>
+
+                                                <Input
+                                                    id="website"
+                                                    placeholder="eg. john@example.com "
+                                                    type="website"
+                                                    autoCapitalize="none"
+                                                    autoComplete="website"
+                                                    autoCorrect="off"
+                                                    disabled={isLoading}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage>
+                                                {form.formState.errors.website?.message}
+                                            </FormMessage>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    name="description"
+                                    control={form.control}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel htmlFor="Description">Description</FormLabel>
+                                            <FormControl>
+
+                                                <Input
+                                                    id="Description"
+                                                    placeholder="eg. 1234 Main St"
+                                                    type="text"
+                                                    autoCapitalize="none"
+                                                    autoComplete="Description"
+                                                    required={false}
+                                                    autoCorrect="off"
+                                                    disabled={isLoading}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage>
+                                                {form.formState.errors.description?.message}
+                                            </FormMessage>
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <FormField
+                                    name="parentAccount"
+                                    control={form.control}
+                                    render={({ field }) => (
+                                        <FormItem className="flex flex-col gap-2">
+                                            <FormLabel>Parent Account</FormLabel>
+                                            <Popover>
+                                                <PopoverTrigger {...field} defaultValue={field.value} asChild>
+                                                    <FormControl>
+                                                        <Button
+                                                            variant="outline"
+                                                            role="combobox"
+                                                            className={cn(
+                                                                "w-full justify-between",
+                                                                !field.value && "text-muted-foreground"
+                                                            )}
+                                                        >
+                                                            {/* {field.value
+                                                        ? AllData.find(
+                                                            (data) => data._id === field.value
+                                                        )?.email
+                                                        : "Select Customer"} */}
+                                                            Select an Account
+                                                            <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                        </Button>
+                                                    </FormControl>
+                                                </PopoverTrigger>
+                                                <PopoverContent side="right" className="w-full p-0">
+                                                    <Command >
+                                                        <CommandInput
+                                                            placeholder="Search Customers..."
+                                                            className="h-9"
+                                                        />
+                                                        <CommandEmpty>
+                                                            <div>
+                                                                No Customer found.
+                                                            </div>
+                                                            <div>
+                                                                <Button variant="ghost" className="mt-2">
+                                                                    <Plus className="h-4 w-4 mr-2" />
+                                                                    Add Customer
+                                                                </Button>
+                                                            </div>
+
+                                                        </CommandEmpty>
+                                                        <CommandGroup>
+                                                            {/* {AllData.map((data) => (
+                                                        <CommandItem
+                                                            value={data._id}
+                                                            key={data.email}
+                                                            onSelect={() => {
+                                                                form.setValue("customer", data._id)
+                                                            }}
+                                                        >
+                                                            {data.email}
+                                                            <CheckIcon
+                                                                className={cn(
+                                                                    "ml-auto h-4 w-4",
+                                                                    data._id === field.value
+                                                                        ? "opacity-100"
+                                                                        : "opacity-0"
+                                                                )}
+                                                            />
+                                                        </CommandItem>
+                                                    ))} */}
+                                                            <CommandItem > <div className="flex flex-row items-center"> <Plus className="h-4 w-4 mr-2" /> Add Customer</div></CommandItem>
+                                                        </CommandGroup>
+                                                    </Command>
+                                                </PopoverContent>
+                                            </Popover>
+                                            {/* <FormDescription>
+                                        Please select a customer from the dropdown
+                                    </FormDescription> */}
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                {/* <FormField
+                            name="mobileNumber"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="mobileNumber">Mobile No.</FormLabel>
+                                    <FormControl>
+
+                                        <Input
+                                            id="mobileNumber"
+                                            placeholder="eg. +91 9876543210"
+                                            type="number"
+                                            autoCapitalize="none"
+                                            autoComplete="mobileNumber"
+                                            autoCorrect="off"
+
+                                            disabled={isLoading}
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage>
+                                        {form.formState.errors.mobileNumber?.message}
+                                    </FormMessage>
+                                </FormItem>
                             )}
-                            Next
-                        </Button>
-                    </div>
+                        />
+                        <FormField
+                            name="address"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="address">Address</FormLabel>
+                                    <FormControl>
+
+                                        <Input
+                                            id="address"
+                                            placeholder="eg. 1234 Main St"
+                                            type="text"
+                                            autoCapitalize="none"
+                                            autoComplete="address"
+                                            required={false}
+                                            autoCorrect="off"
+                                            disabled={isLoading}
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage>
+                                        {form.formState.errors.address?.message}
+                                    </FormMessage>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            name="city"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="city">City</FormLabel>
+                                    <FormControl>
+
+                                        <Input
+                                            id="city"
+                                            placeholder="eg. Mumbai"
+                                            type="text"
+                                            autoCapitalize="none"
+                                            autoComplete="city"
+                                            autoCorrect="off"
+                                            disabled={isLoading}
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage>
+                                        {form.formState.errors.city?.message}
+                                    </FormMessage>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            name="state"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="state">State</FormLabel>
+                                    <FormControl>
+
+                                        <Input
+                                            id="state"
+                                            placeholder="eg. Maharashtra"
+                                            type="text"
+                                            autoCapitalize="none"
+                                            autoComplete="state"
+                                            autoCorrect="off"
+                                            disabled={isLoading}
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage>
+                                        {form.formState.errors.state?.message}
+                                    </FormMessage>
+                                </FormItem>
+                            )} />
+                        <FormField
+                            name="pincode"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="pincode">Pincode</FormLabel>
+                                    <FormControl>
+
+                                        <Input
+                                            id="pincode"
+                                            placeholder="eg. 400001"
+                                            type="number"
+                                            autoCapitalize="none"
+                                            autoComplete="pincode"
+                                            autoCorrect="off"
+                                            disabled={isLoading}
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage>
+                                        {form.formState.errors?.pincode?.message}
+                                    </FormMessage>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            name="country"
+                            control={form.control}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="country">Country</FormLabel>
+                                    <FormControl>
+
+                                        <Input
+                                            id="country"
+                                            placeholder="eg. India"
+                                            type="text"
+                                            autoCapitalize="none"
+                                            autoComplete="country"
+                                            autoCorrect="off"
+                                            disabled={isLoading}
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage>
+                                        {form.formState.errors?.country?.message}
+                                    </FormMessage>
+                                </FormItem>
+                            )}
+                        /> */}
+                            </div>
+                        </div>
+                    }
 
                 </form>
             </Form>
@@ -433,3 +775,4 @@ export function NewAccountForm({ className, gap, ...props }: NewAccountFormProps
         </div>
     )
 }
+
