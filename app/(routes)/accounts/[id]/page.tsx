@@ -6,9 +6,10 @@ import React from 'react'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { useGlobalModal } from '@/hooks/GlobalModal'
 import Link from 'next/link'
-import { Card } from '@/components/ui/card'
+import { Card, CardHeader } from '@/components/ui/card'
 import GraphsComponent from '@/components/graphs'
 import { NewAccountForm } from '@/components/forms/newAccountForm'
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
 
 interface Props {
     params: {
@@ -22,7 +23,7 @@ function Page({ params }: Props) {
     const GlobalModal = useGlobalModal();
 
     return (
-        <div className=' mx-auto px-4 py-4 w-full'>
+        <div className=' mx-auto h-full px-4 py-4 w-full'>
             <div className='flex  justify-between'>
                 <div className='flex flex-col justify-between'>
                     <span className='text-sm text-gray-500'>Account</span>
@@ -70,14 +71,49 @@ function Page({ params }: Props) {
                     <Button variant='outline' className='ml-2'>Edit <Pen className='w-4 ml-2' /></Button>
                 </div>
             </div>
-            <div className='mt-4 grid grid-cols-2 '>
-                <Card className=''>
-                    <h1>Test</h1>
-                </Card>
-                <Card className='mt-4 grid grid-cols-2'>
-                    <h1>Test</h1>
-                </Card>
+            <div className='mt-4 h-[70vh]'>
+
+                <ResizablePanelGroup
+
+                    direction="horizontal"
+                    className=" flex flex-row h-full">
+                    <ResizablePanel
+                        maxSize={20}
+                        minSize={5}
+                        defaultSize={20}
+                        className=" h-full"
+                    >
+
+                        <Card>
+                            <CardHeader>
+                                <Heading className='text-md' title='Account Information' />
+
+                            </CardHeader>
+                        </Card>
+                    </ResizablePanel>
+                    <ResizableHandle withHandle />
+                    <ResizablePanel
+                        minSize={20}
+                    >
+
+                        <div>
+
+                            Rwar
+                        </div>
+
+                    </ResizablePanel>
+                    <ResizableHandle withHandle />
+                    <ResizablePanel >
+
+                        <div>
+
+                            Rwar
+                        </div>
+
+                    </ResizablePanel>
+                </ResizablePanelGroup>
             </div>
+
         </div>
     )
 }

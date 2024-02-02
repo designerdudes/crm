@@ -5,6 +5,7 @@ import { APP_SEO_DESCRIPTION, APP_SEO_TITLE } from "@/constants";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ToastProvider } from "@/components/providers/toast-provider";
 import { NewOrderModalProvider } from "@/components/providers/NewOrderModal-Provider";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", });
 
@@ -20,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn("h-screen", inter.className)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
